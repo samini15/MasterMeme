@@ -15,11 +15,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.navigation.compose.rememberNavController
 import com.example.mastermime.meme.presentation.meme_list.MemeListScreen
+import com.example.mastermime.navigation.NavigationRoot
 import com.example.mastermime.ui.theme.MasterMimeTheme
 
 class MainActivity : ComponentActivity() {
@@ -30,26 +33,13 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MasterMimeTheme {
-                val scrollBehaviour = TopAppBarDefaults.pinnedScrollBehavior()
-                Scaffold(
+                Surface(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colorScheme.background)
-                        .nestedScroll(scrollBehaviour.nestedScrollConnection),
-                    topBar = {
-                        TopAppBar(
-                            title = { Text("MasterMeme") },
-                            scrollBehavior = scrollBehaviour,
-                            colors = TopAppBarDefaults.topAppBarColors().copy(containerColor = MaterialTheme.colorScheme.surface)
-                        )
-                    },
-                    floatingActionButton = {
-                        FloatingActionButton(onClick = { /*TODO*/ }) {
-                            Icon(imageVector = Icons.Default.Add, contentDescription = "Add", tint = MaterialTheme.colorScheme.onPrimary)
-                        }
-                    }
-                ) { innerPadding ->
-                    MemeListScreen()
+                        .fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    val navController = rememberNavController()
+                    NavigationRoot(navController = navController)
                 }
             }
         }
