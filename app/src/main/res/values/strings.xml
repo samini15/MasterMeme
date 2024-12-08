@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">MasterMime</string>
+    <string name="tap_to_create_your_first_meme">Tap + button to create your first meme</string>
+    <string name="choose_template">Choose template</string>
+    <string name="choose_template_for_your_next_meme_masterpiece">Choose template for your next meme masterpiece</string>
+    <string name="your_memes">Your memes</string>
 </resources>
