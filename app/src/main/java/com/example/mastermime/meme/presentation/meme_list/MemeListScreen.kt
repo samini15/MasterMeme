@@ -53,7 +53,8 @@ import com.example.mastermime.ui.theme.MasterMimeTheme
 @Composable
 fun MemeListScreen(
     modifier: Modifier = Modifier,
-    state: MemeListState
+    state: MemeListState,
+    onMemeTemplateClick: (String) -> Unit = {},
 ) {
     val context = LocalContext.current
     val spacing = LocalSpacing.current
@@ -123,7 +124,13 @@ fun MemeListScreen(
                         ) {
                             items(getImagesFromAssets(context)) { image ->
                                 loadBitmapFromAssets(context, image)?.let { bitmap ->
-                                    MemeItem(bitmap = bitmap)
+                                    MemeItem(
+                                        imageId = image,
+                                        bitmap = bitmap,
+                                        onMemeTemplateClick = {
+                                            onMemeTemplateClick(image)
+                                        }
+                                    )
                                 }
                             }
                         }
@@ -137,7 +144,7 @@ fun MemeListScreen(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                if (state.memes.isEmpty()) {
+                if (state.memeTemplates.isEmpty()) {
                     Image(imageVector = ImageVector.vectorResource(id = R.drawable.empty_list), contentDescription = null)
                     Spacer(modifier = Modifier.height(spacing.spaceMedium))
                     Text(

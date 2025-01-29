@@ -2,6 +2,7 @@ package com.example.mastermime.meme.presentation.meme_list.components
 
 import android.graphics.Bitmap
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
@@ -19,22 +20,27 @@ import com.example.mastermime.ui.theme.LocalSpacing
 import com.example.mastermime.ui.theme.MasterMimeTheme
 
 @Composable
-fun MemeItem(bitmap: Bitmap) {
+fun MemeItem(
+    imageId: String,
+    bitmap: Bitmap,
+    onMemeTemplateClick: (String) -> Unit = {}
+) {
     val spacing = LocalSpacing.current
     Box(
         modifier = Modifier
             .size(150.dp)
-            .clip(RoundedCornerShape(spacing.spaceSmall)),
+            .clip(RoundedCornerShape(spacing.spaceSmall))
+            .clickable {
+                onMemeTemplateClick(imageId)
+            },
     ) {
-        bitmap.let {
-            Image(
-                modifier = Modifier
-                    .fillMaxSize(),
-                bitmap = bitmap.asImageBitmap(),
-                contentScale = ContentScale.FillBounds,
-                contentDescription = null
-            )
-        }
+        Image(
+            modifier = Modifier
+                .fillMaxSize(),
+            bitmap = bitmap.asImageBitmap(),
+            contentScale = ContentScale.FillBounds,
+            contentDescription = null
+        )
     }
 
 }
@@ -44,6 +50,6 @@ fun MemeItem(bitmap: Bitmap) {
 private fun MemeItemPreview() {
     val bitmap = loadBitmapFromAssets(context = LocalContext.current, fileName = "c1hh_48.webp")
     MasterMimeTheme {
-        bitmap?.let { MemeItem(bitmap = bitmap) }
+        bitmap?.let { MemeItem(imageId = "c1hh", bitmap = bitmap) }
     }
 }
